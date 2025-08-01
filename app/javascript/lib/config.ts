@@ -24,7 +24,7 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   branding: {
     name: "Takiacademy",
-    logo: "/placeholder.svg?height=40&width=40",
+    logo: "https://play-lh.googleusercontent.com/QwR54xVSABVpntrh-PkcP37uzjUE2wv4o1YoGDCD4ISrVhHTQegWohH-GDppGjQVWr7h",
     link: "https://takiacademy.com",
   },
   theme: {
