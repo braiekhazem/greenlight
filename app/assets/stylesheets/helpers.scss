@@ -16,7 +16,7 @@
 
 .text-link {
   text-decoration: none !important;
-  color: var(--brand-color) !important;
+  color: var(--primary) !important;
 }
 
 .wide-white {
@@ -26,7 +26,9 @@
 }
 
 .vertical-center {
-  min-height: calc(100vh - $header-height - $footer-height - $footer-buffer-height);
+  min-height: calc(
+    100vh - $header-height - $footer-height - $footer-buffer-height
+  );
   display: flex;
   align-items: stretch;
   flex-direction: column;
@@ -57,7 +59,8 @@
     transition: none;
     border: 0;
 
-    &.active, &:hover {
+    &.active,
+    &:hover {
       color: var(--brand-color);
       border-bottom: 1.5px solid var(--brand-color) !important;
     }
