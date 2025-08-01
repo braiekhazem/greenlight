@@ -71,7 +71,11 @@ export default function AuthButtons({ direction }) {
               {t('authentication.sign_up')}
             </ButtonLink>
           ) } */}
-      <ButtonLink to={siteConfig?.branding?.link} className="btn">
+      <ButtonLink
+        to={siteConfig?.branding?.link}
+        className="btn"
+        variant="brand"
+      >
         Login
       </ButtonLink>
     </Stack>
