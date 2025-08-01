@@ -75,10 +75,6 @@ export default function AuthButtons({ direction }) {
         to={siteConfig?.branding?.link}
         variant="brand"
         className="btn"
-        style={{
-          backgroundColor: siteConfig?.branding?.primary,
-          borderColor: siteConfig?.branding?.primary,
-        }}
       >
         Login
       </ButtonLink>

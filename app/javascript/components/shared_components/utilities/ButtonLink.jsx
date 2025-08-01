@@ -18,10 +18,11 @@ import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
+import { siteConfig } from "../../../lib/config";
 
 export default function ButtonLink(props) {
   const navigate = useNavigate();
-  const { to, className, variant, children, style } = props;
+  const { to, className, variant, children } = props;
   const handleClick = useCallback(() => {
     navigate(to);
   }, [to]);
@@ -31,7 +32,10 @@ export default function ButtonLink(props) {
       onClick={handleClick}
       className={className}
       variant={variant}
-      style={style}
+      style={{
+        backgroundColor: siteConfig?.branding?.primary,
+        borderColor: siteConfig?.branding?.primary,
+      }}
     >
       {children}
     </Button>
