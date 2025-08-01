@@ -31,12 +31,17 @@ export default function Footer() {
     currentUser?.role?.name === "Administrator" ||
     currentUser?.role?.name === "SuperAdmin";
 
-  console.log({ siteConfig });
-
   return (
     <footer id="footer" className="footer background-whitesmoke text-center">
       <Container id="footer-container" className="py-3">
-        <a href={siteConfig?.footer?.link} target="_blank" rel="noreferrer">
+        <a
+          href={siteConfig?.footer?.link}
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            color: siteConfig?.branding?.primary,
+          }}
+        >
           {siteConfig?.footer?.brandName}
         </a>
         {isAdmin && <span className="text-muted"> {env?.VERSION_TAG} </span>}

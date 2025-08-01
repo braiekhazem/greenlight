@@ -14,19 +14,23 @@
 // You should have received a copy of the GNU Lesser General Public License along
 // with Greenlight; if not, see <http://www.gnu.org/licenses/>.
 
-import React, { useCallback, useEffect, useState } from 'react';
-import { Container, Form, Spinner } from 'react-bootstrap';
+import React, { useCallback, useEffect, useState } from "react";
+import { Container, Form, Spinner } from "react-bootstrap";
 import {
-  Outlet, useLocation, useNavigate, useSearchParams,
-} from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { ToastContainer, toast } from 'react-toastify';
-import Header from './components/shared_components/Header';
-import { useAuth } from './contexts/auth/AuthProvider';
-import Footer from './components/shared_components/Footer';
-import useSiteSetting from './hooks/queries/site_settings/useSiteSetting';
-import Title from './components/shared_components/utilities/Title';
-import useEnv from './hooks/queries/env/useEnv';
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { ToastContainer, toast } from "react-toastify";
+import Header from "./components/shared_components/Header";
+import { useAuth } from "./contexts/auth/AuthProvider";
+import Footer from "./components/shared_components/Footer";
+import useSiteSetting from "./hooks/queries/site_settings/useSiteSetting";
+import Title from "./components/shared_components/utilities/Title";
+import useEnv from "./hooks/queries/env/useEnv";
+import { siteConfig } from "./lib/config";
 
 export default function App() {
   const currentUser = useAuth();
@@ -34,27 +38,27 @@ export default function App() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { data: env } = useEnv();
-  const autoSignIn = searchParams.get('sso');
+  const autoSignIn = searchParams.get("sso");
   const [formElement, setFormElement] = useState(null);
 
   // check for the maintenance banner
-  const maintenanceBanner = useSiteSetting(['Maintenance']);
+  const maintenanceBanner = useSiteSetting(["Maintenance"]);
 
   // useEffect hook for running notify maintenance banner on page load
   useEffect(() => {
     if (maintenanceBanner.data) {
       const toastId = toast.info(maintenanceBanner.data, {
-        position: 'top-center',
+        position: "top-center",
         autoClose: false,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'light',
-        className: 'text-center',
+        theme: "light",
+        className: "text-center",
       });
-      localStorage.setItem('maintenanceBannerId', toastId);
+      localStorage.setItem("maintenanceBannerId", toastId);
     }
   }, [maintenanceBanner.data]);
 
@@ -66,20 +70,23 @@ export default function App() {
 
   // Handle sso login through parameter
   useEffect(() => {
-    if (autoSignIn && currentUser.signed_in) { navigate('/', { replace: true }); }
+    if (autoSignIn && currentUser.signed_in) {
+      navigate("/", { replace: true });
+    }
     if (!env || !autoSignIn || !formElement) return;
 
     if (env.EXTERNAL_AUTH) {
       // eslint-disable-next-line no-unused-expressions
       formElement.requestSubmit?.() || formElement.submit();
     } else {
-      navigate('/signin', { replace: true });
+      navigate("/signin", { replace: true });
     }
   }, [autoSignIn, env, formElement]);
 
   // Pages that do not need a header: SignIn, SignUp and JoinMeeting (if the user is not signed in)
-  const homePage = location.pathname === '/';
-  const pageHeight = (homePage || currentUser.signed_in) ? 'regular-height' : 'no-header-height';
+  const homePage = location.pathname === "/";
+  const pageHeight =
+    homePage || currentUser.signed_in ? "regular-height" : "no-header-height";
 
   // i18n
   const { i18n } = useTranslation();
@@ -88,43 +95,80 @@ export default function App() {
   }, [currentUser?.language]);
 
   // Greenlight V3 brand-color theming
-  const { isLoading, data: brandColors } = useSiteSetting(['PrimaryColor', 'PrimaryColorLight']);
+  const { isLoading, data: brandColors } = useSiteSetting([
+    "PrimaryColor",
+    "PrimaryColorLight",
+  ]);
 
   if (isLoading) return null;
 
-  document.documentElement.style.setProperty('--brand-color', brandColors.PrimaryColor);
-  document.documentElement.style.setProperty('--brand-color-light', brandColors.PrimaryColorLight);
-  document.documentElement.style.setProperty('--toastify-color-success', brandColors.PrimaryColor);
+  document.documentElement.style.setProperty(
+    "--primary",
+    siteConfig.theme.primary
+  );
+  document.documentElement.style.setProperty(
+    "--secondary",
+    siteConfig.theme.secondary
+  );
+  document.documentElement.style.setProperty(
+    "--brand-color",
+    brandColors.PrimaryColor
+  );
+  document.documentElement.style.setProperty(
+    "--brand-color-light",
+    brandColors.PrimaryColorLight
+  );
+  document.documentElement.style.setProperty(
+    "--toastify-color-success",
+    brandColors.PrimaryColor
+  );
 
   return (
     <>
       <Title>BigBlueButton</Title>
-      { autoSignIn
-        ? (
-          <Container fluid className="d-flex vh-100 justify-content-center align-items-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Signing you in…</span>
-            </Spinner>
+      {autoSignIn ? (
+        <Container
+          fluid
+          className="d-flex vh-100 justify-content-center align-items-center"
+        >
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Signing you in…</span>
+          </Spinner>
 
-            <Form id="sso-form" ref={formRef} action={process.env.OMNIAUTH_PATH} method="POST" data-turbo="false" className="d-none">
-              <input type="hidden" name="authenticity_token" value={document.querySelector('meta[name="csrf-token"]').content} />
-              <input type="hidden" name="current_provider" value={env?.CURRENT_PROVIDER} />
-            </Form>
-          </Container>
-        ) : (
-          <>
-            {(homePage || currentUser.signed_in) && <Header />}
-            <Container className={pageHeight}>
-              <Outlet />
-            </Container>
-            <ToastContainer
-              position="bottom-right"
-              newestOnTop
-              autoClose={3000}
+          <Form
+            id="sso-form"
+            ref={formRef}
+            action={process.env.OMNIAUTH_PATH}
+            method="POST"
+            data-turbo="false"
+            className="d-none"
+          >
+            <input
+              type="hidden"
+              name="authenticity_token"
+              value={document.querySelector('meta[name="csrf-token"]').content}
             />
-            <Footer />
-          </>
-        )}
+            <input
+              type="hidden"
+              name="current_provider"
+              value={env?.CURRENT_PROVIDER}
+            />
+          </Form>
+        </Container>
+      ) : (
+        <>
+          {(homePage || currentUser.signed_in) && <Header />}
+          <Container className={pageHeight}>
+            <Outlet />
+          </Container>
+          <ToastContainer
+            position="bottom-right"
+            newestOnTop
+            autoClose={3000}
+          />
+          <Footer />
+        </>
+      )}
     </>
   );
 }

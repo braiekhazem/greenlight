@@ -27,7 +27,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import HomepageFeatureCard from "./HomepageFeatureCard";
 import useRoomConfigValue from "../../hooks/queries/rooms/useRoomConfigValue";
 import useEnv from "../../hooks/queries/env/useEnv";
 import { siteConfig } from "../../lib/config";
@@ -124,6 +123,9 @@ export default function HomePage() {
             <a
               href={siteConfig?.hero?.learnMoreUrl || "#"}
               className="fs-5 text-link fw-bolder"
+              style={{
+                color: siteConfig?.branding?.primary,
+              }}
             >
               {siteConfig?.hero?.learnMoreText}
               <ArrowRightIcon className="hi-s ms-2" />
