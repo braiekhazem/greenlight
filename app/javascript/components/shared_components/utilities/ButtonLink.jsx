@@ -14,23 +14,24 @@
 // You should have received a copy of the GNU Lesser General Public License along
 // with Greenlight; if not, see <http://www.gnu.org/licenses/>.
 
-import { useNavigate } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
+import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import React, { useCallback } from "react";
+import PropTypes from "prop-types";
 
 export default function ButtonLink(props) {
   const navigate = useNavigate();
-  const {
-    to, className, variant, children,
-  } = props;
-  const handleClick = useCallback(() => { navigate(to); }, [to]);
+  const { to, className, variant, children, style } = props;
+  const handleClick = useCallback(() => {
+    navigate(to);
+  }, [to]);
 
   return (
     <Button
       onClick={handleClick}
       className={className}
       variant={variant}
+      style={style}
     >
       {children}
     </Button>
@@ -38,8 +39,8 @@ export default function ButtonLink(props) {
 }
 
 ButtonLink.defaultProps = {
-  className: '',
-  variant: 'primary',
+  className: "",
+  variant: "primary",
 };
 
 ButtonLink.propTypes = {

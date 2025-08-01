@@ -14,32 +14,38 @@
 // You should have received a copy of the GNU Lesser General Public License along
 // with Greenlight; if not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
-import Image from 'react-bootstrap/Image';
-import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import useSiteSetting from '../../hooks/queries/site_settings/useSiteSetting';
+import React from "react";
+import Image from "react-bootstrap/Image";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import useSiteSetting from "../../hooks/queries/site_settings/useSiteSetting";
+import { siteConfig } from "../../lib/config";
 
 export default function Logo({ size }) {
-  const { isLoading, data: brandingImage } = useSiteSetting('BrandingImage');
+  const { isLoading, data: brandingImage } = useSiteSetting("BrandingImage");
   const navigate = useNavigate();
 
   // Logo can be small or regular size
-  const sizeClass = size === 'small'
-    ? 'small-logo cursor-pointer'
-    : 'logo cursor-pointer position-absolute bottom-0 mx-auto start-0 end-0 text-center';
+  const sizeClass =
+    size === "small"
+      ? "small-logo cursor-pointer"
+      : "logo cursor-pointer position-absolute bottom-0 mx-auto start-0 end-0 text-center";
   // Small Logo is used in Header only and does not require a wrapper
-  const sizeWrapperClass = !size ? 'logo-wrapper position-relative d-block mx-auto' : undefined;
+  const sizeWrapperClass = !size
+    ? "logo-wrapper position-relative d-block mx-auto"
+    : undefined;
 
   if (isLoading) return <div className={sizeWrapperClass} />;
 
   return (
     <div className={sizeWrapperClass}>
       <Image
-        src={brandingImage}
+        src={siteConfig?.branding?.logo}
         className={sizeClass}
         alt="CompanyLogo"
-        onClick={() => { navigate('/'); }}
+        onClick={() => {
+          navigate(siteConfig?.branding?.link);
+        }}
       />
     </div>
   );
@@ -50,5 +56,5 @@ Logo.propTypes = {
 };
 
 Logo.defaultProps = {
-  size: '',
+  size: "",
 };
