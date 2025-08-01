@@ -31,6 +31,8 @@ export default function Footer() {
     currentUser?.role?.name === "Administrator" ||
     currentUser?.role?.name === "SuperAdmin";
 
+  console.log({ siteConfig });
+
   return (
     <footer id="footer" className="footer background-whitesmoke text-center">
       <Container id="footer-container" className="py-3">
