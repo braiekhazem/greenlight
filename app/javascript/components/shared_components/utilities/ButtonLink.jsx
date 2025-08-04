@@ -14,17 +14,16 @@
 // You should have received a copy of the GNU Lesser General Public License along
 // with Greenlight; if not, see <http://www.gnu.org/licenses/>.
 
-import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import { siteConfig } from "../../../lib/config";
 
 export default function ButtonLink(props) {
-  const navigate = useNavigate();
   const { to, className, variant, children } = props;
   const handleClick = useCallback(() => {
-    navigate(to);
+    // eslint-disable-next-line quotes
+    window.open(to, "_blank");
   }, [to]);
 
   return (
