@@ -160,7 +160,6 @@ export default function App() {
           {(homePage || currentUser.signed_in) && <Header />}
           <Container className={pageHeight}>
             <Outlet />
-            <span>test</span>
           </Container>
           <ToastContainer
             position='bottom-right'
