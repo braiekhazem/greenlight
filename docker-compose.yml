@@ -40,6 +40,8 @@ services:
     container_name: external-record
     restart: unless-stopped
     env_file: ./external-record/docker/docker.env
+    volumes:
+      - /var/bigbluebutton/published/video:/recordings
     logging:
       driver: journald
     depends_on:
