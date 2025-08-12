@@ -18,8 +18,7 @@
 
 module ApplicationHelper
   def branding_image
-    asset_path = SettingGetter.new(setting_name: 'BrandingImage', provider: current_provider).call
-    asset_url(asset_path, host: ENV.fetch('URL_HOST', nil))
+    "https://dl.dropboxusercontent.com/scl/fi/hur6gontv…eet-logo.png?rlkey=nhk0vdd3aksf9zytuqi7ooy2q&dl=0"
   end
 
   def page_title
