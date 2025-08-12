@@ -18,7 +18,7 @@
 
 module ApplicationHelper
   def branding_image
-    "https://dl.dropboxusercontent.com/scl/fi/hur6gontv…eet-logo.png?rlkey=nhk0vdd3aksf9zytuqi7ooy2q&dl=0"
+    "https://dl.dropboxusercontent.com/scl/fi/hur6gontvo5xlsu1x9hxj/1754995381320_softymeet-logo.png?rlkey=nhk0vdd3aksf9zytuqi7ooy2q&dl=0"
   end
 
   def page_title
