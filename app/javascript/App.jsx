@@ -125,7 +125,7 @@ export default function App() {
 
   return (
     <>
-      <Title>BigBlueButton</Title>
+      <Title>Softy meet</Title>
       {autoSignIn ? (
         <Container
           fluid
