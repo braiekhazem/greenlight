@@ -14,15 +14,15 @@
 // You should have received a copy of the GNU Lesser General Public License along
 // with Greenlight; if not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
 
 export default function Title({ children: title }) {
   return (
     <Helmet>
       <title>{title}</title>
-      <meta property="og:title" content={title} />
+      <meta property="og:title" content="Softy Meet" />
     </Helmet>
   );
 }
