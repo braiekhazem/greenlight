@@ -23,9 +23,6 @@ ARG BUILD_REF
 
 COPY --from=builder  /tmp/bbb-recording-upload /bbb-recording-upload
 
-USER root
-RUN mkdir -p /recordings && chown 65532:65532 /recordings
-
 USER 65532:65532
 
 
