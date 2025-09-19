@@ -18,18 +18,13 @@ import React, { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {
-  ArrowRightIcon,
-  Cog8ToothIcon,
-  ComputerDesktopIcon,
-  VideoCameraIcon,
-  WrenchScrewdriverIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import useRoomConfigValue from "../../hooks/queries/rooms/useRoomConfigValue";
 import useEnv from "../../hooks/queries/env/useEnv";
 import { siteConfig } from "../../lib/config";
+import SalesContactCard from "./SalesContactCard";
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -38,7 +33,7 @@ export default function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const error = searchParams.get("error");
   const success = searchParams.get("success");
-  const { data: recordValue } = useRoomConfigValue("record");
+  // const { data: recordValue } = useRoomConfigValue("record");
   const { data: env } = useEnv();
 
   // Redirects the user to the proper page based on signed in status and CreateRoom permission
@@ -131,6 +126,13 @@ export default function HomePage() {
               <ArrowRightIcon className="hi-s ms-2" />
             </a>
           </div>
+        </Col>
+      </Row>
+
+      {/* Sales Contact Card */}
+      <Row className="mt-5">
+        <Col lg={8} className="mx-auto">
+          <SalesContactCard />
         </Col>
       </Row>
       {/* <Row>
