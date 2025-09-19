@@ -23,7 +23,6 @@ import {
   CheckCircleIcon,
   StarIcon,
 } from "@heroicons/react/24/outline";
-import { siteConfig } from "../../lib/config";
 
 export default function SalesContactCard() {
   const { t } = useTranslation();
@@ -33,7 +32,7 @@ export default function SalesContactCard() {
     // For example: window.open('mailto:sales@yourcompany.com', '_blank');
     // Or navigate to a contact form
     window.open(
-      "mailto:sales@yourcompany.com?subject=Interest in Premium Features",
+      "mailto:ask@softylines.com?subject=Interest in Premium Features",
       "_blank"
     );
   };
@@ -51,28 +50,14 @@ export default function SalesContactCard() {
       text: "Priority support",
       icon: <CheckCircleIcon className="hi-xs text-success me-2" />,
     },
-    {
-      text: "Custom branding",
-      icon: <CheckCircleIcon className="hi-xs text-success me-2" />,
-    },
-    {
-      text: "Analytics dashboard",
-      icon: <CheckCircleIcon className="hi-xs text-success me-2" />,
-    },
-    {
-      text: "API access",
-      icon: <CheckCircleIcon className="hi-xs text-success me-2" />,
-    },
   ];
 
   return (
     <Card
       className="sales-card border-0 shadow-lg h-100 position-relative overflow-hidden"
       style={{
-        background: `linear-gradient(135deg, ${
-          siteConfig?.branding?.primary || "#007bff"
-        }15 0%, ${siteConfig?.branding?.primary || "#007bff"}05 100%)`,
-        border: `2px solid ${siteConfig?.branding?.primary || "#007bff"}20`,
+        background: `linear-gradient(135deg, #3c5de015 0%, #3c5de005 100%)`,
+        border: `2px solid #3c5de020`,
       }}
     >
       {/* Decorative elements */}
@@ -80,10 +65,7 @@ export default function SalesContactCard() {
         className="position-absolute top-0 end-0 p-3"
         style={{ opacity: 0.1 }}
       >
-        <CurrencyDollarIcon
-          className="hi-xl"
-          style={{ color: siteConfig?.branding?.primary || "#007bff" }}
-        />
+        <CurrencyDollarIcon className="hi-xl" style={{ color: "#3c5de0" }} />
       </div>
 
       <Card.Body className="p-4 position-relative">
@@ -94,16 +76,13 @@ export default function SalesContactCard() {
             style={{
               width: "60px",
               height: "60px",
-              backgroundColor: siteConfig?.branding?.primary || "#007bff",
+              backgroundColor: "#3c5de0",
               color: "white",
             }}
           >
             <StarIcon className="hi-l" />
           </div>
-          <h4
-            className="fw-bold mb-2"
-            style={{ color: siteConfig?.branding?.primary || "#007bff" }}
-          >
+          <h4 className="fw-bold mb-2" style={{ color: "#3c5de0" }}>
             Upgrade to Premium
           </h4>
           <p className="text-muted mb-0">
@@ -133,26 +112,18 @@ export default function SalesContactCard() {
             size="lg"
             className="w-100 mb-3 fw-semibold"
             style={{
-              backgroundColor: siteConfig?.branding?.primary || "#007bff",
-              borderColor: siteConfig?.branding?.primary || "#007bff",
+              backgroundColor: "#3c5de0",
+              borderColor: "#3c5de0",
               borderRadius: "12px",
               padding: "12px 24px",
               fontSize: "16px",
-              boxShadow: `0 4px 12px ${
-                siteConfig?.branding?.primary || "#007bff"
-              }40`,
+              boxShadow: `0 4px 12px #3c5de040`,
             }}
             onMouseEnter={(e) => {
-              e.target.style.transform = "translateY(-2px)";
-              e.target.style.boxShadow = `0 6px 20px ${
-                siteConfig?.branding?.primary || "#007bff"
-              }50`;
+              e.target.style.boxShadow = `0 6px 20px #3c5de050`;
             }}
             onMouseLeave={(e) => {
-              e.target.style.transform = "translateY(0)";
-              e.target.style.boxShadow = `0 4px 12px ${
-                siteConfig?.branding?.primary || "#007bff"
-              }40`;
+              e.target.style.boxShadow = `0 4px 12px #3c5de040`;
             }}
           >
             <ChatBubbleLeftRightIcon className="hi-s me-2" />
@@ -170,9 +141,7 @@ export default function SalesContactCard() {
         className="position-absolute bottom-0 start-0 w-100"
         style={{
           height: "4px",
-          background: `linear-gradient(90deg, ${
-            siteConfig?.branding?.primary || "#007bff"
-          }, ${siteConfig?.branding?.primary || "#007bff"}80)`,
+          background: `linear-gradient(90deg, #3c5de0, #3c5de080)`,
         }}
       />
     </Card>
