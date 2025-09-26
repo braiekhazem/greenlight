@@ -4,7 +4,7 @@
 
 ![Docker Pulls](https://img.shields.io/docker/pulls/bigbluebutton/greenlight.svg)
 
-Greenlight is an open-source, LGPL-3.0 licensed web application that allows organizations to quickly set up a complete web conferencing platform using their existing BigBlueButton server. It is user-friendly for both regular and advanced users.
+Greenlight is LGPL-3.0 licensed web application that allows organizations to quickly set up a complete web conferencing platform using their existing BigBlueButton server. It is user-friendly for both regular and advanced users.
 
 Greenlight v3, the latest version, is constructed with the cutting-edge versions of Ruby on Rails and React - a robust technology stack adopted by millions of projects and trusted by major corporations worldwide.
 

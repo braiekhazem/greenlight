@@ -47,7 +47,7 @@
 
 cs:
   opengraph:
-    description: Učte pomocí BigBlueButton - důvěryhodné open-source web videokonferenční platformy.
+    description: Učte pomocí BigBlueButton - důvěryhodné web videokonferenční platformy.
   meeting:
     moderator_message: "Další osoby pozvete na konferenci tím, že jim zašlete následující odkaz:"
     access_code: "Přístupový kód: %{code}"
