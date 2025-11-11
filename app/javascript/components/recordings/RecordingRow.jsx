@@ -15,51 +15,62 @@
 // with Greenlight; if not, see <http://www.gnu.org/licenses/>.
 
 import {
-  VideoCameraIcon, TrashIcon, PencilSquareIcon, ClipboardDocumentIcon, EllipsisVerticalIcon,
-} from '@heroicons/react/24/outline';
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Button, Stack, Dropdown,
-} from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../contexts/auth/AuthProvider';
-import Spinner from '../shared_components/utilities/Spinner';
-import UpdateRecordingForm from './forms/UpdateRecordingForm';
-import DeleteRecordingForm from './forms/DeleteRecordingForm';
-import Modal from '../shared_components/modals/Modal';
-import { localizeDateTimeString } from '../../helpers/DateTimeHelper';
-import useRedirectRecordingUrl from '../../hooks/mutations/recordings/useRedirectRecordingUrl';
-import useCopyRecordingUrl from '../../hooks/mutations/recordings/useCopyRecordingUrl';
-import SimpleSelect from '../shared_components/utilities/SimpleSelect';
+  VideoCameraIcon,
+  TrashIcon,
+  PencilSquareIcon,
+  ClipboardDocumentIcon,
+  EllipsisVerticalIcon,
+} from "@heroicons/react/24/outline";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Button, Stack, Dropdown } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "../../contexts/auth/AuthProvider";
+import Spinner from "../shared_components/utilities/Spinner";
+import UpdateRecordingForm from "./forms/UpdateRecordingForm";
+import DeleteRecordingForm from "./forms/DeleteRecordingForm";
+import Modal from "../shared_components/modals/Modal";
+import { localizeDateTimeString } from "../../helpers/DateTimeHelper";
+import useRedirectRecordingUrl from "../../hooks/mutations/recordings/useRedirectRecordingUrl";
+import useCopyRecordingUrl from "../../hooks/mutations/recordings/useCopyRecordingUrl";
+import SimpleSelect from "../shared_components/utilities/SimpleSelect";
 
 // TODO: Amir - Refactor this.
 export default function RecordingRow({
-  recording, visibilityMutation: useVisibilityAPI, deleteMutation: useDeleteAPI, adminTable, dropUp,
+  recording,
+  visibilityMutation: useVisibilityAPI,
+  deleteMutation: useDeleteAPI,
+  adminTable,
+  dropUp,
 }) {
   const { t } = useTranslation();
 
   const visibilityAPI = useVisibilityAPI();
   const [isEditing, setIsEditing] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [display, setDisplay] = useState('invisible');
+  const [display, setDisplay] = useState("invisible");
 
   const currentUser = useAuth();
   const redirectRecordingUrl = useRedirectRecordingUrl();
   const copyRecordingUrl = useCopyRecordingUrl();
-  const allowedVisibilities = JSON.parse(currentUser.permissions?.AccessToVisibilities);
+  const allowedVisibilities = JSON.parse(
+    currentUser.permissions?.AccessToVisibilities
+  );
 
-  const localizedTime = localizeDateTimeString(recording?.recorded_at, currentUser?.language);
-  const formats = recording.formats.sort(
-    (a, b) => (a.recording_type.toLowerCase() > b.recording_type.toLowerCase() ? 1 : -1),
+  const localizedTime = localizeDateTimeString(
+    recording?.recorded_at,
+    currentUser?.language
+  );
+  const formats = recording.formats.sort((a, b) =>
+    a.recording_type.toLowerCase() > b.recording_type.toLowerCase() ? 1 : -1
   );
 
   return (
     <tr
       key={recording.id}
       className="align-middle text-muted border border-2"
-      onMouseEnter={() => setDisplay('visible')}
-      onMouseLeave={() => setDisplay('invisible')}
+      onMouseEnter={() => setDisplay("visible")}
+      onMouseLeave={() => setDisplay("invisible")}
     >
       <td className="border-end-0 text-dark">
         <Stack direction="horizontal" className="py-2">
@@ -76,11 +87,9 @@ export default function RecordingRow({
                 setIsUpdating={setIsUpdating}
                 setIsEditing={setIsEditing}
               />
-              {
-                !isEditing
-                && (
+              {!isEditing && (
                 <>
-                  { recording.name }
+                  {recording.name}
                   <PencilSquareIcon
                     role="button"
                     aria-hidden="true"
@@ -89,131 +98,179 @@ export default function RecordingRow({
                     className={`hi-s text-muted ms-1 mb-1 ${display}`}
                   />
                 </>
-                )
-              }
-              {
-                isUpdating && <Spinner animation="grow" variant="brand" />
-              }
+              )}
+              {isUpdating && <Spinner animation="grow" variant="brand" />}
             </strong>
             <span className="small text-muted"> {localizedTime} </span>
-            {adminTable && <span className="small text-muted fw-bold"> {recording?.user_name} </span>}
+            {adminTable && (
+              <span className="small text-muted fw-bold">
+                {" "}
+                {recording?.user_name}{" "}
+              </span>
+            )}
           </Stack>
         </Stack>
       </td>
-      <td className="border-0"> {t('recording.length_in_minutes', { recording })} </td>
+      <td className="border-0">
+        {" "}
+        {t("recording.length_in_minutes", { recording })}{" "}
+      </td>
       <td className="border-0"> {recording.participants} </td>
       <td className="border-0">
-        <SimpleSelect
-          defaultValue={recording.visibility}
-          dropUp={dropUp}
-        >
-          { (allowedVisibilities.includes('Public/Protected') || recording.visibility === 'Public/Protected') && (
+        <SimpleSelect defaultValue={recording.visibility} dropUp={dropUp}>
+          {(allowedVisibilities.includes("Public/Protected") ||
+            recording.visibility === "Public/Protected") && (
             <Dropdown.Item
               key="Public/Protected"
               value="Public/Protected"
-              onClick={() => visibilityAPI.mutate({ visibility: 'Public/Protected', id: recording.record_id })}
+              onClick={() =>
+                visibilityAPI.mutate({
+                  visibility: "Public/Protected",
+                  id: recording.record_id,
+                })
+              }
             >
-              {t('recording.public_protected')}
+              {t("recording.public_protected")}
             </Dropdown.Item>
           )}
 
-          { (allowedVisibilities.includes('Public') || recording.visibility === 'Public') && (
+          {(allowedVisibilities.includes("Public") ||
+            recording.visibility === "Public") && (
             <Dropdown.Item
               key="Public"
               value="Public"
-              onClick={() => visibilityAPI.mutate({ visibility: 'Public', id: recording.record_id })}
+              onClick={() =>
+                visibilityAPI.mutate({
+                  visibility: "Public",
+                  id: recording.record_id,
+                })
+              }
             >
-              {t('recording.public')}
+              {t("recording.public")}
             </Dropdown.Item>
           )}
 
-          { (allowedVisibilities.includes('Protected') || recording.visibility === 'Protected') && (
+          {(allowedVisibilities.includes("Protected") ||
+            recording.visibility === "Protected") && (
             <Dropdown.Item
               key="Protected"
               value="Protected"
-              onClick={() => visibilityAPI.mutate({ visibility: 'Protected', id: recording.record_id })}
+              onClick={() =>
+                visibilityAPI.mutate({
+                  visibility: "Protected",
+                  id: recording.record_id,
+                })
+              }
             >
-              {t('recording.protected')}
+              {t("recording.protected")}
             </Dropdown.Item>
           )}
 
-          { (allowedVisibilities.includes('Published') || recording.visibility === 'Published') && (
+          {(allowedVisibilities.includes("Published") ||
+            recording.visibility === "Published") && (
             <Dropdown.Item
               key="Published"
               value="Published"
-              onClick={() => visibilityAPI.mutate({ visibility: 'Published', id: recording.record_id })}
+              onClick={() =>
+                visibilityAPI.mutate({
+                  visibility: "Published",
+                  id: recording.record_id,
+                })
+              }
             >
-              {t('recording.published')}
+              {t("recording.published")}
             </Dropdown.Item>
           )}
 
-          { (allowedVisibilities.includes('Unpublished') || recording.visibility === 'Unpublished') && (
+          {(allowedVisibilities.includes("Unpublished") ||
+            recording.visibility === "Unpublished") && (
             <Dropdown.Item
               key="Unpublished"
               value="Unpublished"
-              onClick={() => visibilityAPI.mutate({ visibility: 'Unpublished', id: recording.record_id })}
+              onClick={() =>
+                visibilityAPI.mutate({
+                  visibility: "Unpublished",
+                  id: recording.record_id,
+                })
+              }
             >
-              {t('recording.unpublished')}
+              {t("recording.unpublished")}
             </Dropdown.Item>
           )}
         </SimpleSelect>
       </td>
       <td className="border-0">
-        {recording?.visibility !== 'Unpublished' && formats.map((format) => (
-          <Button
-            onClick={() => redirectRecordingUrl.mutate({ record_id: recording.record_id, format: format.recording_type })}
-            className={`btn-sm rounded-pill me-1 mt-1 border-0 btn-format-${format.recording_type.toLowerCase()}`}
-            key={`${format.recording_type}-${format.url}`}
-          >
-            {format.recording_type}
-          </Button>
-        ))}
+        {recording?.visibility !== "Unpublished" &&
+          formats.map((format) => (
+            <Button
+              onClick={() =>
+                window.open(format.url.replace("&dl=1", "&raw=1"), "_blank")
+              }
+              className={`btn-sm rounded-pill me-1 mt-1 border-0 btn-format-${format.recording_type.toLowerCase()}`}
+              key={`${format.recording_type}-${format.url}`}
+            >
+              {format.recording_type}
+            </Button>
+          ))}
       </td>
       <td className="border-start-0">
-        {adminTable
-          ? (
-            <Dropdown className="float-end cursor-pointer">
-              <Dropdown.Toggle className="hi-s" as={EllipsisVerticalIcon} />
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={() => copyRecordingUrl.mutate({ record_id: recording.record_id })}>
-                  <ClipboardDocumentIcon className="hi-s me-2" />
-                  {t('recording.copy_recording_urls')}
-                </Dropdown.Item>
-                <Modal
-                  modalButton={<Dropdown.Item><TrashIcon className="hi-s me-2" />{t('delete')}</Dropdown.Item>}
-                  body={(
-                    <DeleteRecordingForm
-                      mutation={useDeleteAPI}
-                      recordId={recording.record_id}
-                    />
-                  )}
-                />
-              </Dropdown.Menu>
-            </Dropdown>
-          )
-          : (
-            <Stack direction="horizontal" className="float-end recordings-icons">
-              { recording?.visibility !== 'Unpublished' && (
-                <Button
-                  variant="icon"
-                  className="mt-1 me-3"
-                  title={t('recording.copy_recording_urls')}
-                  onClick={() => copyRecordingUrl.mutate({ record_id: recording.record_id })}
-                >
-                  <ClipboardDocumentIcon className="hi-s text-muted" />
-                </Button>
-              )}
+        {adminTable ? (
+          <Dropdown className="float-end cursor-pointer">
+            <Dropdown.Toggle className="hi-s" as={EllipsisVerticalIcon} />
+            <Dropdown.Menu>
+              <Dropdown.Item
+                onClick={() =>
+                  copyRecordingUrl.mutate({ record_id: recording.record_id })
+                }
+              >
+                <ClipboardDocumentIcon className="hi-s me-2" />
+                {t("recording.copy_recording_urls")}
+              </Dropdown.Item>
               <Modal
-                modalButton={<Dropdown.Item className="btn btn-icon"><TrashIcon className="hi-s me-2" title={t('delete')} /></Dropdown.Item>}
-                body={(
+                modalButton={
+                  <Dropdown.Item>
+                    <TrashIcon className="hi-s me-2" />
+                    {t("delete")}
+                  </Dropdown.Item>
+                }
+                body={
                   <DeleteRecordingForm
                     mutation={useDeleteAPI}
                     recordId={recording.record_id}
                   />
-                )}
+                }
               />
-            </Stack>
-          )}
+            </Dropdown.Menu>
+          </Dropdown>
+        ) : (
+          <Stack direction="horizontal" className="float-end recordings-icons">
+            {recording?.visibility !== "Unpublished" && (
+              <Button
+                variant="icon"
+                className="mt-1 me-3"
+                title={t("recording.copy_recording_urls")}
+                onClick={() =>
+                  copyRecordingUrl.mutate({ record_id: recording.record_id })
+                }
+              >
+                <ClipboardDocumentIcon className="hi-s text-muted" />
+              </Button>
+            )}
+            <Modal
+              modalButton={
+                <Dropdown.Item className="btn btn-icon">
+                  <TrashIcon className="hi-s me-2" title={t("delete")} />
+                </Dropdown.Item>
+              }
+              body={
+                <DeleteRecordingForm
+                  mutation={useDeleteAPI}
+                  recordId={recording.record_id}
+                />
+              }
+            />
+          </Stack>
+        )}
       </td>
     </tr>
   );
@@ -231,10 +288,12 @@ RecordingRow.propTypes = {
     name: PropTypes.string.isRequired,
     length: PropTypes.number.isRequired,
     participants: PropTypes.number.isRequired,
-    formats: PropTypes.arrayOf(PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      recording_type: PropTypes.string.isRequired,
-    })),
+    formats: PropTypes.arrayOf(
+      PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        recording_type: PropTypes.string.isRequired,
+      })
+    ),
     visibility: PropTypes.string.isRequired,
     protectable: PropTypes.bool,
     recorded_at: PropTypes.string.isRequired,
