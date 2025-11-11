@@ -14,7 +14,7 @@
   "report": "Bericht",
   "share": "Teilen",
   "cancel": "Abbrechen",
-  "reset":   "Zurücksetzen",
+  "reset": "Zurücksetzen",
   "close": "Schließen",
   "delete": "Löschen",
   "copy": "Einladungslink kopieren",
@@ -32,7 +32,7 @@
   "action_permanent": "Diese Aktion kann nicht rückgängig gemacht werden.",
   "homepage": {
     "welcome_bbb": "Willkommen in BigBlueButton.",
-    "bigbluebutton_description": "BigBlueButton ist ein Open-Source-Webkonferenzsystem für Online-Kurse. Die Plattform optimiert das Lernen, indem sie es ermöglicht, zusammenzuarbeiten und Feedback in Echtzeit zu erhalten.",
+    "bigbluebutton_description": "BigBlueButton ist ein Webkonferenzsystem für Online-Kurse. Die Plattform optimiert das Lernen, indem sie es ermöglicht, zusammenzuarbeiten und Feedback in Echtzeit zu erhalten.",
     "greenlight_description": "Erstelle mit ihr eigene Räume, um Konferenzen abzuhalten, oder tritt über einen kurzen und bequemen Link einer bestehenden bei.",
     "learn_more": "Erfahre mehr über BigBlueButton",
     "explore_features": "Entdecke unsere Features",
@@ -321,14 +321,14 @@
         "default_role_description": "Standard-Rolle, die neuen Nutzenden zugeteilt wird",
         "registration_method": "Registrierungs-Methode",
         "registration_method_description": "Registrierungs-Methoden ändern",
-        "registration_methods" : {
+        "registration_methods": {
           "open": "Offene Registrierung",
           "invite": "Per Einladung teilnehmen",
           "approval": "Zulassen/Ablehnen"
         },
         "allowed_domains": "Erlaubte Email-Domains",
         "allowed_domains_signup_description": "Lasse nur spezifische Email-Domains zur Anmeldung zu. Angabe in folgendem Format: @test.com,domain.com",
-        "enter_allowed_domains_rule" : "Erlaubte Domains eingeben"
+        "enter_allowed_domains_rule": "Erlaubte Domains eingeben"
       }
     },
     "room_configuration": {
@@ -566,8 +566,8 @@
     "room_join": {
       "fields": {
         "name": {
-            "label": "Name",
-            "placeholder": "Namen eingeben"
+          "label": "Name",
+          "placeholder": "Namen eingeben"
         },
         "access_code": {
           "label": "Zugangscode",

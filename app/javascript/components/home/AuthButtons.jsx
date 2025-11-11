@@ -14,49 +14,49 @@
 // You should have received a copy of the GNU Lesser General Public License along
 // with Greenlight; if not, see <http://www.gnu.org/licenses/>.
 
-import React, { useEffect } from "react";
-import { Form, Stack } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import { useLocation, useSearchParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import PropTypes from "prop-types";
-import ButtonLink from "../shared_components/utilities/ButtonLink";
-import useSiteSetting from "../../hooks/queries/site_settings/useSiteSetting";
-import useEnv from "../../hooks/queries/env/useEnv";
-import { siteConfig } from "../../lib/config";
+import React, { useEffect } from 'react';
+import { Form, Stack } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+import ButtonLink from '../shared_components/utilities/ButtonLink';
+import useSiteSetting from '../../hooks/queries/site_settings/useSiteSetting';
+import useEnv from '../../hooks/queries/env/useEnv';
+import { siteConfig } from '../../lib/config';
 
 export default function AuthButtons({ direction }) {
   const { data: env } = useEnv();
   const { t } = useTranslation();
   const { search } = useLocation();
-  const { data: registrationMethod } = useSiteSetting("RegistrationMethod");
+  const { data: registrationMethod } = useSiteSetting('RegistrationMethod');
   const [searchParams] = useSearchParams();
-  const inviteToken = searchParams.get("inviteToken");
+  const inviteToken = searchParams.get('inviteToken');
 
   useEffect(() => {
     document.cookie = `inviteToken=${inviteToken};path=/;`;
   }, [inviteToken]);
 
   function showSignUp() {
-    return registrationMethod !== "invite" || !!inviteToken;
+    return registrationMethod !== 'invite' || !!inviteToken;
   }
 
   if (env?.EXTERNAL_AUTH) {
     return (
-      <Form action={process.env.OMNIAUTH_PATH} method="POST" data-turbo="false">
+      <Form action={process.env.OMNIAUTH_PATH} method='POST' data-turbo='false'>
         <input
-          type="hidden"
-          name="authenticity_token"
+          type='hidden'
+          name='authenticity_token'
           value={document.querySelector('meta[name="csrf-token"]').content}
         />
         <input
-          type="hidden"
-          name="current_provider"
+          type='hidden'
+          name='current_provider'
           value={env?.CURRENT_PROVIDER}
         />
         <Stack direction={direction} gap={2}>
-          <Button variant="brand" className="btn" type="submit">
-            {t("authentication.sign_in")}
+          <Button variant='brand' className='btn' type='submit'>
+            {t('authentication.sign_in')}
           </Button>
         </Stack>
       </Form>
@@ -72,20 +72,20 @@ export default function AuthButtons({ direction }) {
             </ButtonLink>
           ) } */}
       <ButtonLink
-        to={siteConfig?.branding?.link}
-        className="btn"
-        variant="brand"
+        to={`/signup${search}`}
+        variant='brand-outline-color'
+        className='btn'
       >
-        Login
+        {t('authentication.sign_up')}
       </ButtonLink>
     </Stack>
   );
 }
 
 AuthButtons.defaultProps = {
-  direction: "horizontal",
+  direction: 'horizontal',
 };
 
 AuthButtons.propTypes = {
-  direction: PropTypes.oneOf(["horizontal", "vertical"]),
+  direction: PropTypes.oneOf(['horizontal', 'vertical']),
 };
