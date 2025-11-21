@@ -45,11 +45,7 @@ export default function Header() {
           <Logo size="small" />
           <p className="ms-3 mb-0 fs-5 fw-bold">{siteConfig?.branding?.name}</p>
         </Navbar.Brand>
-        {/* {currentUser.signed_in ? (
-          <NavbarSignedIn currentUser={currentUser} />
-        ) : (
-          <NavbarNotSignedIn />
-        )} */}
+        {currentUser.signed_in && <NavbarSignedIn currentUser={currentUser} />}
       </Container>
     </Navbar>
   );
