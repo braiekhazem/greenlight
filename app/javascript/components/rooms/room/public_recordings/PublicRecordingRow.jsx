@@ -27,6 +27,7 @@ import { useAuth } from '../../../../contexts/auth/AuthProvider';
 import { localizeDateTimeString } from '../../../../helpers/DateTimeHelper';
 import useRedirectRecordingUrl from '../../../../hooks/mutations/recordings/useRedirectRecordingUrl';
 import useCopyRecordingUrl from '../../../../hooks/mutations/recordings/useCopyRecordingUrl';
+import { toast } from 'react-toastify';
 
 // TODO: Amir - Refactor this.
 export default function PublicRecordingRow({
@@ -74,7 +75,10 @@ export default function PublicRecordingRow({
             variant="icon"
             className="mt-1 me-3"
             title={t('recording.copy_recording_urls')}
-            onClick={() => copyRecordingUrl.mutate({ record_id: recording.record_id })}
+            onClick={() => {
+              toast.success(t('toast.success.recording.copied_urls'));
+              window.navigator.clipboard.writeText(recording.formats?[0]?.url);
+            }}
           >
             <ClipboardDocumentIcon className="hi-s text-muted" />
           </Button>
