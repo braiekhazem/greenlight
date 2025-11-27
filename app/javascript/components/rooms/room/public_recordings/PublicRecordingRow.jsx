@@ -85,7 +85,9 @@ export default function PublicRecordingRow({ recording }) {
             title={t("recording.copy_recording_urls")}
             onClick={() => {
               toast.success(t("toast.success.recording.copied_urls"));
-              window.navigator.clipboard.writeText(recording.formats?.[0]?.url);
+              window.navigator.clipboard.writeText(
+                recording.formats?.[0]?.url?.replace("&dl=1", "&raw=1")
+              );
             }}
           >
             <ClipboardDocumentIcon className="hi-s text-muted" />

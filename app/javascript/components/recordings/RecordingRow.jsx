@@ -253,7 +253,7 @@ export default function RecordingRow({
                 onClick={() => {
                   toast.success(t("toast.success.recording.copied_urls"));
                   window.navigator.clipboard.writeText(
-                    recording.formats?.[0]?.url
+                    recording.formats?.[0]?.url?.replace("&dl=1", "&raw=1")
                   );
                 }}
               >
