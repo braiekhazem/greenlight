@@ -14,34 +14,33 @@
 // You should have received a copy of the GNU Lesser General Public License along
 // with Greenlight; if not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React from "react";
 import {
-  VideoCameraIcon, ClipboardDocumentIcon,
-} from '@heroicons/react/24/outline';
-import PropTypes from 'prop-types';
-import {
-  Button, Stack,
-} from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../../contexts/auth/AuthProvider';
-import { localizeDateTimeString } from '../../../../helpers/DateTimeHelper';
-import useRedirectRecordingUrl from '../../../../hooks/mutations/recordings/useRedirectRecordingUrl';
-import useCopyRecordingUrl from '../../../../hooks/mutations/recordings/useCopyRecordingUrl';
-import { toast } from 'react-toastify';
+  VideoCameraIcon,
+  ClipboardDocumentIcon,
+} from "@heroicons/react/24/outline";
+import PropTypes from "prop-types";
+import { Button, Stack } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../../contexts/auth/AuthProvider";
+import { localizeDateTimeString } from "../../../../helpers/DateTimeHelper";
+import useRedirectRecordingUrl from "../../../../hooks/mutations/recordings/useRedirectRecordingUrl";
+import useCopyRecordingUrl from "../../../../hooks/mutations/recordings/useCopyRecordingUrl";
 
 // TODO: Amir - Refactor this.
-export default function PublicRecordingRow({
-  recording,
-}) {
+export default function PublicRecordingRow({ recording }) {
   const { t } = useTranslation();
 
   const currentUser = useAuth();
   const redirectRecordingUrl = useRedirectRecordingUrl();
   const copyRecordingUrl = useCopyRecordingUrl();
 
-  const localizedTime = localizeDateTimeString(recording?.recorded_at, currentUser?.language);
-  const formats = recording.formats.sort(
-    (a, b) => (a.recording_type.toLowerCase() > b.recording_type.toLowerCase() ? 1 : -1),
+  const localizedTime = localizeDateTimeString(
+    recording?.recorded_at,
+    currentUser?.language
+  );
+  const formats = recording.formats.sort((a, b) =>
+    a.recording_type.toLowerCase() > b.recording_type.toLowerCase() ? 1 : -1
   );
 
   return (
@@ -57,11 +56,19 @@ export default function PublicRecordingRow({
           </Stack>
         </Stack>
       </td>
-      <td className="border-0"> {t('recording.length_in_minutes', { recording })} </td>
+      <td className="border-0">
+        {" "}
+        {t("recording.length_in_minutes", { recording })}{" "}
+      </td>
       <td className="border-0">
         {formats.map((format) => (
           <Button
-            onClick={() => redirectRecordingUrl.mutate({ record_id: recording.record_id, format: format.recording_type })}
+            onClick={() =>
+              redirectRecordingUrl.mutate({
+                record_id: recording.record_id,
+                format: format.recording_type,
+              })
+            }
             className={`btn-sm rounded-pill me-1 mt-1 border-0 btn-format-${format.recording_type.toLowerCase()}`}
             key={`${format.recording_type}-${recording.record_id}`}
           >
@@ -74,11 +81,10 @@ export default function PublicRecordingRow({
           <Button
             variant="icon"
             className="mt-1 me-3"
-            title={t('recording.copy_recording_urls')}
-            onClick={() => {
-              toast.success(t('toast.success.recording.copied_urls'));
-              window.navigator.clipboard.writeText(recording.formats?[0]?.url);
-            }}
+            title={t("recording.copy_recording_urls")}
+            onClick={() =>
+              copyRecordingUrl.mutate({ record_id: recording.record_id })
+            }
           >
             <ClipboardDocumentIcon className="hi-s text-muted" />
           </Button>
@@ -94,10 +100,12 @@ PublicRecordingRow.propTypes = {
     record_id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     length: PropTypes.number.isRequired,
-    formats: PropTypes.arrayOf(PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      recording_type: PropTypes.string.isRequired,
-    })),
+    formats: PropTypes.arrayOf(
+      PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        recording_type: PropTypes.string.isRequired,
+      })
+    ),
     recorded_at: PropTypes.string.isRequired,
   }).isRequired,
 };
