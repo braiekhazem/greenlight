@@ -205,7 +205,12 @@ export default function RecordingRow({
           formats.map((format) => (
             <Button
               onClick={() =>
-                window.open(format.url.replace("&dl=1", "&raw=1"), "_blank")
+                window.open(
+                  format.url
+                    .replace("&dl=1", "&raw=1")
+                    .replace("127.0.0.1", "live.softymeet.com"),
+                  "_blank"
+                )
               }
               className={`btn-sm rounded-pill me-1 mt-1 border-0 btn-format-${format.recording_type.toLowerCase()}`}
               key={`${format.recording_type}-${format.url}`}
