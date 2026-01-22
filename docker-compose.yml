@@ -39,7 +39,7 @@ services:
       dockerfile: docker/Dockerfile
     container_name: external-record
     restart: unless-stopped
-    env_file: docker/docker.env
+    env_file: ./external-record/docker/docker.env
     logging:
       driver: journald
     depends_on:
